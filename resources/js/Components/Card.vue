@@ -1,8 +1,6 @@
 <template>
     <div class="card">
-        <span>
-            {{ card.title }}
-        </span>
+        <span> {{ card.column_id }} {{ card.title }} - {{ card.order }} </span>
     </div>
 </template>
 

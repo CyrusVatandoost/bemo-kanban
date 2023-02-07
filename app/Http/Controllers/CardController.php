@@ -31,4 +31,23 @@ class CardController extends Controller
     {
         //
     }
+
+    public function updateOrder(Request $request)
+    {
+        $request->validate([
+            'cards' => 'required|array',
+            'cards.*.id' => 'required|exists:cards,id',
+            'cards.*.column_id' => 'required|exists:columns,id',
+            'cards.*.order' => 'required|integer',
+        ]);
+
+        foreach ($request->cards as $card) {
+            $card = Card::find($card['id']);
+            $card->column_id = $card['column_id'];
+            $card->order = $card['order'];
+            $card->save();
+        }
+
+        return back();
+    }
 }
