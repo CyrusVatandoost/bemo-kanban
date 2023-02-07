@@ -3,6 +3,7 @@
         <span>
             {{ column.title }}
         </span>
+        <DeleteColumnButton :columnId="column.id" />
         <div>
             <div v-for="card in column.cards" :key="card.id">
                 {{ card.title }}
@@ -14,9 +15,10 @@
 
 <script>
 import CreateCardForm from "./CreateCardForm.vue";
+import DeleteColumnButton from "./DeleteColumnButton.vue";
 
 export default {
-    components: { CreateCardForm },
+    components: { CreateCardForm, DeleteColumnButton },
     props: {
         column: Object,
     },
