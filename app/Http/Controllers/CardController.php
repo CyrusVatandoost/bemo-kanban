@@ -24,7 +24,17 @@ class CardController extends Controller
 
     public function update(Request $request, Card $card)
     {
-        //
+        $request->validate([
+            'title' => 'required|string',
+            'description' => 'nullable|string',
+        ]);
+
+        $card->update([
+            'title' => $request->title,
+            'description' => $request->description,
+        ]);
+
+        return back();
     }
 
     public function destroy(Card $card)

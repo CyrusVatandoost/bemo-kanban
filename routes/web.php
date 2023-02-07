@@ -13,4 +13,6 @@ Route::delete('/columns/{column}', [ColumnController::class, 'destroy'])->name('
 
 Route::post('/cards', [CardController::class, 'store'])->name('cards.store');
 
+Route::put('/cards/{card}', [CardController::class, 'update'])->name('cards.update');
+
 Route::post('/cards/order', [CardController::class, 'updateOrder'])->name('cards.order');
