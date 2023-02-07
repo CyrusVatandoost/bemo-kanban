@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Card extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'title',
+        'description',
+        'order',
+    ];
+
+    public function column()
+    {
+        return $this->belongsTo(Column::class);
+    }
 }

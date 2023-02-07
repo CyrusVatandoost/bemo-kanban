@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Column extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'title',
+        'description',
+        'order',
+    ];
+
+    public function cards()
+    {
+        return $this->hasMany(Card::class);
+    }
 }
