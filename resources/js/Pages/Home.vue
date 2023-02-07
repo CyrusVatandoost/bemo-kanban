@@ -1,3 +1,3 @@
 <template>
-    <span>hello</span>
+    <div class="card">hello</div>
 </template>

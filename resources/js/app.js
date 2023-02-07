@@ -1,5 +1,6 @@
 import Vue from "vue";
 import { createInertiaApp } from "@inertiajs/vue2";
+import "../sass/app.scss";
 
 createInertiaApp({
     resolve: (name) => {
