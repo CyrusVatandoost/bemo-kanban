@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Column;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,10 +13,12 @@ return new class () extends Migration {
      */
     public function up()
     {
-        Schema::create('columns', function (Blueprint $table) {
+        Schema::create('cards', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->foreignIdFor(Column::class);
             $table->integer('order')->nullable();
+            $table->string('title');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +30,6 @@ return new class () extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('columns');
+        Schema::dropIfExists('cards');
     }
 };
