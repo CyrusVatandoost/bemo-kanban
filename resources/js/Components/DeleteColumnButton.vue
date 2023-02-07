@@ -1,5 +1,5 @@
 <template>
-    <button @click="submit">Delete Column</button>
+    <button @click="submit" class="button">Delete</button>
 </template>
 
 <script>

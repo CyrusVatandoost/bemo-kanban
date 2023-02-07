@@ -1,9 +1,11 @@
 <template>
     <div class="column">
-        <span>
-            {{ column.title }}
-        </span>
-        <DeleteColumnButton :columnId="column.id" />
+        <div>
+            <span class="title">
+                {{ column.title }}
+            </span>
+            <DeleteColumnButton :columnId="column.id" />
+        </div>
         <draggable
             :list="cards"
             group="cards"

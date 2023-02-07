@@ -1,9 +1,13 @@
 <template>
-    <div>
-        <span>Create Column</span>
-        <form @submit.prevent="submit">
-            <input type="text" v-model="form.title" />
-            <button type="submit">Create</button>
+    <div class="column">
+        <span class="title">Create Column</span>
+        <form @submit.prevent="submit" class="form">
+            <input
+                class="input"
+                type="text"
+                v-model="form.title"
+                placeholder="Column title" />
+            <button type="submit" class="button">Create</button>
         </form>
     </div>
 </template>
