@@ -1,7 +1,7 @@
 <template>
     <div class="card">
         <div @click="toggleModal" class="card-clickable padding">
-            <span>{{ card.column_id }} {{ form.title }} {{ card.order }}</span>
+            <span>{{ form.title }}</span>
         </div>
         <div v-if="showModal" class="modal">
             <div class="modal-content">

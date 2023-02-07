@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Card;
+use App\Models\Column;
 use Illuminate\Http\Request;
 
 class CardController extends Controller
@@ -62,6 +63,57 @@ class CardController extends Controller
             ]);
         }
 
+        self::orderAllCards();
+
         return back();
+    }
+
+    public function add(Request $request)
+    {
+        $request->validate([
+            'card_id' => 'required|exists:cards,id',
+            'column_id' => 'required|exists:columns,id',
+            'order' => 'required|integer',
+        ]);
+
+        $card = Card::find($request->card_id);
+
+        $card->update([
+            'column_id' => $request->column_id,
+            'order' => $request->order,
+        ]);
+
+        // Update the order of the cards in the column
+        $cards = Card::where('column_id', $request->column_id)
+            ->where('id', '!=', $card->id)
+            ->where('order', '>=', $request->order)
+            ->get();
+
+        foreach ($cards as $card) {
+            $card->update([
+                'order' => $card->order + 1,
+            ]);
+        }
+
+        self::orderAllCards();
+
+        return back();
+    }
+
+    public static function orderAllCards()
+    {
+        foreach (Column::all() as $column) {
+            $cards = Card::where('column_id', $column->id)->orderBy('order')->get();
+
+            $order = 0;
+
+            foreach ($cards as $card) {
+                $card->update([
+                    'order' => $order,
+                ]);
+
+                $order++;
+            }
+        }
     }
 }

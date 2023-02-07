@@ -6,7 +6,11 @@
             </span>
             <DeleteColumnButton :columnId="column.id" />
         </div>
-        <draggable v-model="cards" group="cards" @change="updateCardsOrder">
+        <draggable
+            v-model="cards"
+            group="cards"
+            @add="added"
+            @update="updateCardsOrder">
             <Card v-for="card in cards" :key="card.id" :card="card" />
         </draggable>
         <CreateCardForm :columnId="column.id" />
@@ -48,12 +52,6 @@ export default {
                 return card;
             });
 
-            cardsToUpdate.forEach((card, index) => {
-                console.log(
-                    `card ${card.title} order ${index} column ${this.column.id} index ${index}`
-                );
-            });
-
             useForm({
                 cards: cardsToUpdate,
             }).post("/cards/order", {
@@ -64,6 +62,23 @@ export default {
         },
         sortCards(cards) {
             return cards.sort((a, b) => a.order - b.order);
+        },
+        added(event) {
+            const index = event.newIndex;
+            const card = this.cards[index];
+            card.column_id = this.column.id;
+            card.order = index;
+
+            useForm({
+                card_id: card.id,
+                column_id: card.column_id,
+                order: card.order,
+            }).post("/cards/add", {
+                preserveScroll: true,
+            });
+        },
+        removed() {
+            console.log("removed");
         },
     },
 };
