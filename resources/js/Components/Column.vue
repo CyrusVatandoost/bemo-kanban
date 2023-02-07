@@ -6,11 +6,7 @@
             </span>
             <DeleteColumnButton :columnId="column.id" />
         </div>
-        <draggable
-            :list="cards"
-            group="cards"
-            v-bind="dragOptions"
-            @change="updateCardsOrder">
+        <draggable v-model="cards" group="cards" @change="updateCardsOrder">
             <Card v-for="card in cards" :key="card.id" :card="card" />
         </draggable>
         <CreateCardForm :columnId="column.id" />
@@ -18,11 +14,11 @@
 </template>
 
 <script>
+import { useForm } from "@inertiajs/vue2";
+import draggable from "vuedraggable";
+import Card from "./Card.vue";
 import CreateCardForm from "./CreateCardForm.vue";
 import DeleteColumnButton from "./DeleteColumnButton.vue";
-import Card from "./Card.vue";
-import draggable from "vuedraggable";
-import { useForm } from "@inertiajs/vue2";
 
 export default {
     components: { Card, CreateCardForm, DeleteColumnButton, draggable },
@@ -36,7 +32,7 @@ export default {
                 disabled: false,
                 ghostClass: "ghost",
             },
-            cards: [],
+            cards: this.column.cards,
         };
     },
     mounted() {
@@ -44,20 +40,17 @@ export default {
     },
     methods: {
         updateCardsOrder() {
+            console.log("updateCardsOrder");
+
             const cardsToUpdate = this.cards.map((card, index) => {
-                return {
-                    id: card.id,
-                    column_id: this.column.id,
-                    title: card.title,
-                    order: index,
-                };
+                card.column_id = this.column.id;
+                card.order = index;
+                return card;
             });
 
-            this.cards = this.sortCards(cardsToUpdate);
-
-            cardsToUpdate.forEach((card) => {
+            cardsToUpdate.forEach((card, index) => {
                 console.log(
-                    `Card ${card.title} moved to ${card.order} and column ${card.column_id}`
+                    `card ${card.title} order ${index} column ${this.column.id} index ${index}`
                 );
             });
 
@@ -66,6 +59,8 @@ export default {
             }).post("/cards/order", {
                 preserveScroll: true,
             });
+
+            this.cards = this.sortCards(cardsToUpdate);
         },
         sortCards(cards) {
             return cards.sort((a, b) => a.order - b.order);

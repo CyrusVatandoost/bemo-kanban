@@ -14,9 +14,12 @@ class CardController extends Controller
             'column_id' => 'required|exists:columns,id',
         ]);
 
+        $order = Card::where('column_id', $request->column_id)->count();
+
         $card = Card::create([
             'title' => $request->title,
             'column_id' => $request->column_id,
+            'order' => $order,
         ]);
 
         return back();
@@ -51,11 +54,12 @@ class CardController extends Controller
             'cards.*.order' => 'required|integer',
         ]);
 
+
         foreach ($request->cards as $card) {
-            $card = Card::find($card['id']);
-            $card->column_id = $card['column_id'];
-            $card->order = $card['order'];
-            $card->save();
+            Card::find($card['id'])->update([
+                'column_id' => $card['column_id'],
+                'order' => $card['order'],
+            ]);
         }
 
         return back();
