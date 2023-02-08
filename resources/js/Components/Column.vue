@@ -9,7 +9,7 @@
         <draggable
             v-model="cards"
             group="cards"
-            @add="added"
+            @add="cardAddedToColumn"
             @update="updateCardsOrder">
             <Card v-for="card in cards" :key="card.id" :card="card" />
         </draggable>
@@ -40,12 +40,23 @@ export default {
         };
     },
     mounted() {
-        this.cards = this.sortCards(this.column.cards);
+        this.updateCards(this.column.cards);
+    },
+    watch: {
+        column: {
+            handler: function (newColumn) {
+                this.updateCards(newColumn.cards);
+            },
+        },
     },
     methods: {
+        updateCards(cards) {
+            this.cards = this.sortCards(cards);
+        },
+        sortCards(cards) {
+            return cards.sort((a, b) => a.order - b.order);
+        },
         updateCardsOrder() {
-            console.log("updateCardsOrder");
-
             const cardsToUpdate = this.cards.map((card, index) => {
                 card.column_id = this.column.id;
                 card.order = index;
@@ -60,10 +71,7 @@ export default {
 
             this.cards = this.sortCards(cardsToUpdate);
         },
-        sortCards(cards) {
-            return cards.sort((a, b) => a.order - b.order);
-        },
-        added(event) {
+        cardAddedToColumn(event) {
             const index = event.newIndex;
             const card = this.cards[index];
             card.column_id = this.column.id;
@@ -76,9 +84,6 @@ export default {
             }).post("/cards/add", {
                 preserveScroll: true,
             });
-        },
-        removed() {
-            console.log("removed");
         },
     },
 };
