@@ -20,6 +20,8 @@ class BoardController extends Controller
             ->includeTables(['cards', 'columns'])
             ->dumpToFile('dump.sql');
 
-        return response()->download('dump.sql');
+        return response()->download(
+            public_path('dump.sql')
+        );
     }
 }
