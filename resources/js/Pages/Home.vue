@@ -1,6 +1,6 @@
 <template>
     <div class="main">
-        <div class="justify-between">
+        <div class="justify-between padding">
             <div>
                 <h1 class="title">Kanban Board</h1>
                 <h2 class="subtitle">
@@ -11,9 +11,7 @@
                 </h2>
             </div>
             <div>
-                <Link class="button" href="/export" method="post" as="button">
-                    Export Board
-                </Link>
+                <a class="button" href="/export"> Export Board </a>
             </div>
         </div>
         <div class="board">
