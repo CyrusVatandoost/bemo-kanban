@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\AccessToken;
-use Illuminate\Http\Request;
 
 class AccessTokenController extends Controller
 {
@@ -21,7 +20,7 @@ class AccessTokenController extends Controller
     {
         $token = AccessToken::where('token', $token)->first();
 
-        if (!$token) {
+        if (! $token) {
             return false;
         }
 

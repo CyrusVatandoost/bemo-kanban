@@ -55,7 +55,6 @@ class CardController extends Controller
             'cards.*.order' => 'required|integer',
         ]);
 
-
         foreach ($request->cards as $card) {
             Card::find($card['id'])->update([
                 'column_id' => $card['column_id'],
