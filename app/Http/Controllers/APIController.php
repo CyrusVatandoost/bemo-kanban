@@ -9,10 +9,11 @@ class APIController extends Controller
 {
     public function getAllCards(Request $request)
     {
-        $request->validate([
-            'date' => ['nullable', 'date'],
-            'status' => ['nullable', 'boolean'],
-        ]);
+        $access_token = $request->access_token;
+
+        if(AccessTokenController::checkToken($access_token) === false) {
+            return response()->json(['error' => 'Invalid access token.'], 401);
+        }
 
         $date = $request->date;
         $status = $request->status;

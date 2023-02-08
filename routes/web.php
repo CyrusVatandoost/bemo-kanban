@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccessTokenController;
 use App\Http\Controllers\BoardController;
 use App\Http\Controllers\CardController;
 use App\Http\Controllers\ColumnController;
@@ -21,3 +22,5 @@ Route::put('/cards/{card}', [CardController::class, 'update'])->name('cards.upda
 Route::post('/cards/add', [CardController::class, 'add'])->name('cards.add');
 
 Route::post('/cards/order', [CardController::class, 'updateOrder'])->name('cards.order');
+
+Route::get('/token/generate', [AccessTokenController::class, 'generate'])->name('token.generate');
