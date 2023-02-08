@@ -9,11 +9,9 @@ class BoardController extends Controller
 {
     public function exportToSQL(Request $request)
     {
-        // TODO: Test this in production
-
-        $databaseName = env('DB_DATABASE');
-        $userName = env('DB_USERNAME');
-        $password = env('DB_PASSWORD');
+        $databaseName = config('settings.DB_DATABASE');
+        $userName = config('settings.DB_USERNAME');
+        $password = config('settings.DB_PASSWORD');
 
         MySql::create()
             ->setDbName($databaseName)
@@ -21,5 +19,7 @@ class BoardController extends Controller
             ->setPassword($password)
             ->includeTables(['cards', 'columns'])
             ->dumpToFile('dump.sql');
+
+        return response()->download('dump.sql');
     }
 }
