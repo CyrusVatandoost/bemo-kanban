@@ -1,19 +1,24 @@
 <template>
-    <div class="column">
-        <div>
-            <span class="title">
-                {{ column.title }}
-            </span>
-            <DeleteColumnButton :columnId="column.id" />
+    <div>
+        <div class="column">
+            <div class="justify-between">
+                <span class="column-title">
+                    {{ column.title }}
+                </span>
+                <div>
+                    <DeleteColumnButton :columnId="column.id" />
+                </div>
+            </div>
+            <draggable
+                class="cards"
+                v-model="cards"
+                group="cards"
+                @add="cardAddedToColumn"
+                @update="updateCardsOrder">
+                <Card v-for="card in cards" :key="card.id" :card="card" />
+            </draggable>
+            <CreateCardForm :columnId="column.id" />
         </div>
-        <draggable
-            v-model="cards"
-            group="cards"
-            @add="cardAddedToColumn"
-            @update="updateCardsOrder">
-            <Card v-for="card in cards" :key="card.id" :card="card" />
-        </draggable>
-        <CreateCardForm :columnId="column.id" />
     </div>
 </template>
 

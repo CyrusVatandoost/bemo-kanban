@@ -16,7 +16,7 @@
                         type="text"
                         v-model="form.description"
                         :disabled="form.processing"></textarea>
-                    <div>
+                    <div class="justify-between">
                         <button
                             class="button"
                             type="button"

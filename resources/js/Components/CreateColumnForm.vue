@@ -1,6 +1,6 @@
 <template>
     <div class="column">
-        <span class="title">Create Column</span>
+        <span class="column-title">Create Column</span>
         <form @submit.prevent="submit" class="form">
             <input
                 class="input"

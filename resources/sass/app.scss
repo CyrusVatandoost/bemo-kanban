@@ -7,7 +7,17 @@ body {
 
 $white: #fff;
 $background: #f5f5f5;
-$border: #e5e5e5;
+$border: 1px solid #e5e5e5;
+
+$border-radius: 0.5rem;
+
+.main {
+    display: flex;
+    flex-direction: column;
+    & > * + * {
+        margin-left: 1rem;
+    }
+}
 
 .background {
     background-color: $background;
@@ -15,21 +25,40 @@ $border: #e5e5e5;
 
 .card {
     background-color: $white;
-    border: 1px solid $border;
-    border-radius: 0.25rem;
+    border: $border;
+    border-radius: $border-radius;
 }
 
 .card-clickable {
     cursor: pointer;
 }
 
-.column-container {
+.board {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(10, 1fr);
+    grid-gap: 1rem;
 }
 
 .column {
     padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    & > * + * {
+        margin-top: 1rem;
+    }
+    border: $border;
+    border-radius: $border-radius;
+    background-color: $background;
+    height: 100%;
+}
+
+.column-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.cards {
     display: flex;
     flex-direction: column;
     & > * + * {
@@ -56,8 +85,8 @@ $border: #e5e5e5;
 .modal-content {
     background-color: $white;
     padding: 1rem;
-    border: 1px solid $border;
-    border-radius: 0.25rem;
+    border: $border;
+    border-radius: $border-radius;
     width: 50%;
     max-width: 500px;
     min-width: 300px;
@@ -73,8 +102,8 @@ $border: #e5e5e5;
 
 .input {
     padding: 0.5rem;
-    border: 1px solid $border;
-    border-radius: 0.25rem;
+    border: $border;
+    border-radius: $border-radius;
     font-size: 1rem;
     &:focus {
         outline: none;
@@ -83,9 +112,9 @@ $border: #e5e5e5;
 }
 
 .button {
-    padding: 0.5rem;
-    border: 1px solid $border;
-    border-radius: 0.25rem;
+    padding: 0.5rem 1rem;
+    border: $border;
+    border-radius: $border-radius;
     font-size: 1rem;
     background-color: $white;
     &:focus {
@@ -105,4 +134,14 @@ $border: #e5e5e5;
 .title {
     font-size: 1.5rem;
     font-weight: bold;
+}
+
+.subtitle {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.justify-between {
+    display: flex;
+    justify-content: space-between;
 }
